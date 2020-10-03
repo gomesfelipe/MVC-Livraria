@@ -1,0 +1,35 @@
+﻿@model MVC_LIVRARIA.Models.Livro
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Deletar livro</h2>
+<h4>
+    Ficha Tecnica
+</h4>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroPaginas)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.TemIlustra)
+        </dt>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID"/>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Voltar para a listagem</a>
+    </form>
+</div>

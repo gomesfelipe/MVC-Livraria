@@ -1,0 +1,116 @@
+﻿@model IEnumerable<MVC_LIVRARIA.Models.Livro>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Adicionar novo</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Autor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroPaginas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TemIlustra)
+            </th>
+        </tr>
+        <tbody>
+            @foreach (var livro in Model)
+            {
+            <tr>
+                <div class="pull-right" id="options">
+                    <ul class="list-inline text-right">
+                        @if (livro.Favorito == false)
+                        {
+                            <li><button class="btn-link glyphicon glyphicon-heart-empty" onclick="Fav(@livro.ID)"></button></li>
+                        }
+                        else
+                        {
+                            <li><button class="btn-link glyphicon glyphicon-heart-empty" onclick="UnFav(@livro.ID)"></button></li>
+                        }
+                    </ul>
+                </div>
+                <td>
+                    @Html.DisplayFor(modelItem => livro.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => livro.Autor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => livro.Genero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => livro.NumeroPaginas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => livro.TemIlustra)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@livro.ID">Editar</a>
+                    <a asp-action="Details" asp-route-id="@livro.ID">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@livro.ID">Excluir</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </thead>
+</table>
+
+<script type="text/javascript">
+
+    function Fav(id) {
+        var url = '@Url.Action("_Fav", "Home")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if(data.length == 0) // No errors
+                    alert("Favoritado com sucesso!");
+            },
+            error: function (jqXHR) { // Http Status is not 200
+            },
+            complete: function (jqXHR, status) { // Whether success or error it enters here
+            }
+        });
+    };
+
+    function UnFav(id) {
+        var url = '@Url.Action("_UnFav", "Home")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if(data.length == 0) // No errors
+                    alert("Removido dos favoritos com successo!");
+            },
+            error: function (jqXHR) { // Http Status is not 200
+            },
+            complete: function (jqXHR, status) { // Whether success or error it enters here
+            }
+        });
+    };
+
+</script>
